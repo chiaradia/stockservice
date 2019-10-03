@@ -2,25 +2,34 @@ package com.payconiq.stockservice.service;
 
 import com.payconiq.stockservice.datatransferobject.StockDTO;
 import com.payconiq.stockservice.repository.InMemoryStockRepository;
+import com.payconiq.stockservice.service.mapper.StockMapper;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DefaultStockService implements StockService
 {
-    private final InMemoryStockRepository stockRepository;
+    private final InMemoryStockRepository inMemoryStockRepository;
 
 
     @Autowired
-    public DefaultStockService(final InMemoryStockRepository stockRepository)
+    public DefaultStockService(final InMemoryStockRepository inMemoryStockRepository)
     {
-        this.stockRepository = stockRepository;
+        this.inMemoryStockRepository = inMemoryStockRepository;
     }
 
 
     @Override
-    public StockDTO getAll()
+    public List<StockDTO> getAll()
     {
-        return null;
+        return StockMapper.makeStockDTOList(inMemoryStockRepository.findAll());
+    }
+
+
+    @Override
+    public StockDTO getStockById(final Long id)
+    {
+        return StockMapper.makeStockDTO(inMemoryStockRepository.findById(id));
     }
 }

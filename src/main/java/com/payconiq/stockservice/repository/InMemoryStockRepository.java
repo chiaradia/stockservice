@@ -30,7 +30,7 @@ public class InMemoryStockRepository implements StockRepository
                 .currentPrice(Price.builder().value(BigDecimal.valueOf(134.45)).currency("EUR").build())
                 .name("AMAZON")
                 .dateCreated(OffsetDateTime.now())
-                .lastUpdated(OffsetDateTime.now())
+                .dateLastUpdated(OffsetDateTime.now())
                 .stockStatus(StockStatus.NEUTRAL)
                 .build(),
             Stock
@@ -39,7 +39,7 @@ public class InMemoryStockRepository implements StockRepository
                 .currentPrice(Price.builder().value(BigDecimal.valueOf(345.22)).currency("EUR").build())
                 .name("GOOGLE")
                 .dateCreated(OffsetDateTime.now())
-                .lastUpdated(OffsetDateTime.now())
+                .dateLastUpdated(OffsetDateTime.now())
                 .stockStatus(StockStatus.NEUTRAL)
                 .build()
 

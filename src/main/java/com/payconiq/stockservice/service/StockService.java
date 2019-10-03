@@ -1,8 +1,11 @@
 package com.payconiq.stockservice.service;
 
 import com.payconiq.stockservice.datatransferobject.StockDTO;
+import java.util.List;
 
 public interface StockService
 {
-    StockDTO getAll();
+    List<StockDTO> getAll();
+
+    StockDTO getStockById(Long id);
 }

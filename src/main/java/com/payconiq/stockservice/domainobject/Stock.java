@@ -14,7 +14,7 @@ public class Stock implements Serializable
     String name;
     Price currentPrice;
     Price lastPrice;
-    OffsetDateTime lastUpdated;
+    OffsetDateTime dateLastUpdated;
     OffsetDateTime dateCreated;
     StockStatus stockStatus;
 }
