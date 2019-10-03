@@ -4,9 +4,14 @@ import com.payconiq.stockservice.datatransferobject.StockDTO;
 import com.payconiq.stockservice.service.StockService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -34,5 +39,20 @@ public class StockController
     public StockDTO getStockById(@PathVariable("stockId") Long stockId)
     {
         return stockService.getStockById(stockId);
+    }
+
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public StockDTO createStock(@RequestBody StockDTO stockDTO)
+    {
+        return stockService.createStock(stockDTO);
+    }
+
+    // TODO Since we're only changing part of the entity, maybe a PATCH could be evaluated
+    @PutMapping
+    public StockDTO updatePrice(StockDTO stockDTO)
+    {
+        return null;
     }
 }

@@ -8,4 +8,6 @@ public interface StockService
     List<StockDTO> getAll();
 
     StockDTO getStockById(Long id);
+
+    StockDTO createStock(StockDTO stockDTO);
 }

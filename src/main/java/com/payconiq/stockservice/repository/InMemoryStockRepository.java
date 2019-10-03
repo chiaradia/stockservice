@@ -2,7 +2,6 @@ package com.payconiq.stockservice.repository;
 
 import com.payconiq.stockservice.domainobject.Price;
 import com.payconiq.stockservice.domainobject.Stock;
-import com.payconiq.stockservice.domainvalue.StockStatus;
 import com.payconiq.stockservice.exception.StockNotFoundException;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
@@ -17,7 +16,7 @@ import org.springframework.stereotype.Repository;
 public class InMemoryStockRepository implements StockRepository
 {
     private AtomicLong stockId = new AtomicLong(0);
-    private List<Stock> stocks = new ArrayList<>();
+    private List<Stock> stocks = new ArrayList<>(); //Change to MAP -> O(1) for search
 
 
     @PostConstruct
@@ -31,7 +30,6 @@ public class InMemoryStockRepository implements StockRepository
                 .name("AMAZON")
                 .dateCreated(OffsetDateTime.now())
                 .dateLastUpdated(OffsetDateTime.now())
-                .stockStatus(StockStatus.NEUTRAL)
                 .build(),
             Stock
                 .builder()
@@ -40,7 +38,6 @@ public class InMemoryStockRepository implements StockRepository
                 .name("GOOGLE")
                 .dateCreated(OffsetDateTime.now())
                 .dateLastUpdated(OffsetDateTime.now())
-                .stockStatus(StockStatus.NEUTRAL)
                 .build()
 
         ));
@@ -67,13 +64,33 @@ public class InMemoryStockRepository implements StockRepository
     @Override
     public Stock save(Stock stock)
     {
-        return null;
+        //Since this is an immutable object, we need to create a copy to set the ID, dateCreated.
+        Stock stockCopy = stock
+            .toBuilder()
+            .id(stockId.incrementAndGet())
+            .name(stock.getName())
+            .currentPrice(stock.getCurrentPrice())
+            .dateCreated(OffsetDateTime.now())
+            .build();
+
+        stocks.add(stockCopy);
+        return stockCopy;
     }
 
 
     @Override
     public Stock update(Stock stock)
     {
-        return null;
+        Stock stockCopy = stock
+            .toBuilder()
+            .id(stock.getId())
+            .name(stock.getName())
+            .currentPrice(stock.getCurrentPrice())
+            .dateCreated(stock.getDateCreated())
+            .dateLastUpdated(OffsetDateTime.now())
+            .build();
+
+        stocks.add(stocks.indexOf(stock), stockCopy);
+        return stockCopy;
     }
 }

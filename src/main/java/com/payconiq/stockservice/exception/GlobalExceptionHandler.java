@@ -1,5 +1,7 @@
 package com.payconiq.stockservice.exception;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.time.OffsetDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,11 +21,10 @@ public class GlobalExceptionHandler
 
     @ResponseBody
     @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity handleException(Exception ex)
     {
-        //log.error(ex);
-        return new ResponseEntity<>(new ErrorMessage(ex.getMessage(), OffsetDateTime.now()), HttpStatus.INTERNAL_SERVER_ERROR);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(logAndConvert(ex));
     }
 
 
@@ -32,8 +33,15 @@ public class GlobalExceptionHandler
     @ExceptionHandler(StockNotFoundException.class)
     public ResponseEntity handleStockNotFoundException(StockNotFoundException ex)
     {
-        //log.error(ex);
-        return new ResponseEntity<>(new ErrorMessage(ex.getMessage(), OffsetDateTime.now()), HttpStatus.NOT_FOUND);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(logAndConvert(ex));
+    }
+
+
+    private ErrorMessage logAndConvert(Throwable throwable)
+    {
+        log.error("Error catch by the GlobalExceptionHandler", throwable);
+        throwable.printStackTrace(new PrintWriter(new StringWriter()));
+        return new ErrorMessage(throwable.getMessage(), OffsetDateTime.now());
     }
 
 

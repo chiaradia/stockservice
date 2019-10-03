@@ -1,6 +1,7 @@
 package com.payconiq.stockservice.service;
 
 import com.payconiq.stockservice.datatransferobject.StockDTO;
+import com.payconiq.stockservice.domainobject.Stock;
 import com.payconiq.stockservice.repository.InMemoryStockRepository;
 import com.payconiq.stockservice.service.mapper.StockMapper;
 import java.util.List;
@@ -31,5 +32,13 @@ public class DefaultStockService implements StockService
     public StockDTO getStockById(final Long id)
     {
         return StockMapper.makeStockDTO(inMemoryStockRepository.findById(id));
+    }
+
+
+    @Override
+    public StockDTO createStock(StockDTO stockDTO)
+    {
+        Stock savedStock = inMemoryStockRepository.save(StockMapper.makeStock(stockDTO));
+        return StockMapper.makeStockDTO(savedStock);
     }
 }
