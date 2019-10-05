@@ -5,8 +5,8 @@ import com.payconiq.stockservice.domainobject.Stock;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.annotation.PostConstruct;
 import org.springframework.context.annotation.Profile;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
 public class InMemoryStockRepository implements StockRepository
 {
     private final AtomicLong stockId = new AtomicLong(0);
-    private final Map<Long, Stock> stocks = new LinkedHashMap<>();
+    private final ConcurrentHashMap<Long, Stock> stocks = new ConcurrentHashMap<>();
 
 
     @PostConstruct
@@ -50,9 +50,9 @@ public class InMemoryStockRepository implements StockRepository
 
 
     @Override
-    public Stock findById(final Long id)
+    public Optional<Stock> findById(final Long id)
     {
-        return stocks.get(id);
+        return Optional.ofNullable(stocks.get(id));
     }
 
 
@@ -64,12 +64,20 @@ public class InMemoryStockRepository implements StockRepository
         return enhancedStockObject;
     }
 
+
     // This is necessary because the method replace() returns the currentValue, not the new one.
     @Override
     public Stock update(final Stock stock)
     {
         stocks.replace(stock.getId(), stock);
         return stocks.get(stock.getId());
+    }
+
+
+    @Override
+    public void delete(Long id)
+    {
+        stocks.remove(id);
     }
 
 

@@ -4,6 +4,7 @@ import com.payconiq.stockservice.datatransferobject.PriceDTO;
 import com.payconiq.stockservice.datatransferobject.StockDTO;
 import com.payconiq.stockservice.domainobject.Price;
 import com.payconiq.stockservice.domainobject.Stock;
+import com.payconiq.stockservice.exception.StockNotFoundException;
 import com.payconiq.stockservice.repository.StockRepository;
 import com.payconiq.stockservice.service.mapper.PriceMapper;
 import com.payconiq.stockservice.service.mapper.StockMapper;
@@ -35,7 +36,7 @@ public class DefaultStockService implements StockService
     @Override
     public StockDTO getStockById(final Long id)
     {
-        return StockMapper.makeStockDTO(stockRepository.findById(id));
+        return StockMapper.makeStockDTO(findStockChecked(id));
     }
 
 
@@ -50,9 +51,22 @@ public class DefaultStockService implements StockService
     @Override
     public StockDTO updatePrice(final Long id, final PriceDTO priceDTO)
     {
-        Stock updatedStock = stockRepository.update(makeStockWithNewPrice(stockRepository.findById(id), PriceMapper.makePrice(priceDTO)));
+        Stock updatedStock = stockRepository.update(makeStockWithNewPrice(findStockChecked(id), PriceMapper.makePrice(priceDTO)));
         return StockMapper.makeStockDTO(updatedStock);
 
+    }
+
+
+    @Override
+    public void deleteStock(Long id)
+    {
+        stockRepository.delete(findStockChecked(id).getId());
+    }
+
+
+    private Stock findStockChecked(final Long stockId)
+    {
+        return stockRepository.findById(stockId).orElseThrow(() -> new StockNotFoundException("Could not find stock with id: " + stockId));
     }
 
 

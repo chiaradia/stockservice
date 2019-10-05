@@ -13,4 +13,6 @@ public interface StockService
     StockDTO createStock(StockDTO stockDTO);
 
     StockDTO updatePrice(Long id, PriceDTO priceDTO);
+
+    void deleteStock(Long id);
 }
