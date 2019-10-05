@@ -1,5 +1,6 @@
 package com.payconiq.stockservice.controller;
 
+import com.payconiq.stockservice.datatransferobject.PriceDTO;
 import com.payconiq.stockservice.datatransferobject.StockDTO;
 import com.payconiq.stockservice.service.StockService;
 import java.util.List;
@@ -49,10 +50,10 @@ public class StockController
         return stockService.createStock(stockDTO);
     }
 
-    // TODO Since we're only changing part of the entity, maybe a PATCH could be evaluated
-    @PutMapping
-    public StockDTO updatePrice(StockDTO stockDTO)
+
+    @PutMapping("/{stockId}")
+    public StockDTO updatePrice(@RequestBody PriceDTO priceDTO, @PathVariable("stockId") Long stockId)
     {
-        return null;
+        return stockService.updatePrice(stockId, priceDTO);
     }
 }

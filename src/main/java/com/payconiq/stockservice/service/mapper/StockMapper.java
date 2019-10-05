@@ -17,8 +17,7 @@ public class StockMapper
     {
         return StockDTO.builder()
             .id(stock.getId())
-            .currentPrice(stock.getCurrentPrice())
-            .lastPrice(stock.getLastPrice())
+            .currentPrice(PriceMapper.makePriceDto(stock.getCurrentPrice()))
             .dateCreated(stock.getDateCreated())
             .dateLastUpdated(stock.getDateLastUpdated())
             .name(stock.getName())
@@ -38,8 +37,7 @@ public class StockMapper
     {
         return Stock.builder()
             .id(stockDTO.getId())
-            .currentPrice(stockDTO.getCurrentPrice())
-            .lastPrice(stockDTO.getLastPrice())
+            .currentPrice(PriceMapper.makePrice(stockDTO.getCurrentPrice()))
             .dateCreated(stockDTO.getDateCreated())
             .dateLastUpdated(stockDTO.getDateLastUpdated())
             .name(stockDTO.getName())

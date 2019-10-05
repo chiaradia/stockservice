@@ -1,11 +1,11 @@
 package com.payconiq.stockservice.repository;
 
 import com.payconiq.stockservice.domainobject.Stock;
-import java.util.List;
+import java.util.Collection;
 
 public interface StockRepository
 {
-    List<Stock> findAll();
+    Collection<Stock> findAll();
 
     Stock findById(Long id);
 

@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class ErrorMessage
+class ErrorMessage
 {
     private String message;
     private OffsetDateTime timeStamp;
