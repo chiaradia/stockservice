@@ -4,7 +4,13 @@ import com.payconiq.stockservice.datatransferobject.StockDTO;
 import com.payconiq.stockservice.domainobject.Stock;
 import com.payconiq.stockservice.exception.StockNotFoundException;
 import com.payconiq.stockservice.repository.InMemoryStockRepository;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -20,7 +26,9 @@ import static com.payconiq.stockservice.util.DataGenerator.DUMMY_STOCK_WITH_UPDA
 import static com.payconiq.stockservice.util.DataGenerator.PRICE_UPDATE_DTO;
 import static com.payconiq.stockservice.util.DataGenerator.STOCK_CREATE_DTO;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsNull.notNullValue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -69,6 +77,17 @@ public class DefaultStockServiceTest
         assertThat(stock, equalTo(DUMMY_STOCK_DTO_WITH_ID));
     }
 
+    @Test
+    public void givenARequest_whenFetchAll_listOfStockDTOReturns()
+    {
+        when(inMemoryStockRepository.findAll())
+            .thenReturn(Collections.singletonList(DUMMY_STOCK_WITH_ID));
+
+        List<StockDTO> stockDTOList = stockService.getAll();
+
+        assertThat(stockDTOList, notNullValue());
+        assertThat(stockDTOList, not(stockDTOList.isEmpty()));
+    }
 
     @Test
     public void givenANotRegisteredStockId_whenQueryById_shouldThrowException()
