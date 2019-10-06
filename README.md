@@ -13,7 +13,7 @@ This application aims to expose a RESTful API to perform CRUD operations for sto
 - Java 8
 - Spring Boot
 - Maven
-- JUnit 4, Mockito for testing
+- JUnit 4 and Mockito for unit testing
 - Travis CI
 - Postman
 
@@ -55,8 +55,7 @@ Note that is possible to create custom ones, since Micrometer dependency has bee
     $ cd stockservice
     $ ./mvnw test
 
-Furthermore, it's highly recommended to take a look at the Postman collection. It's possible to test the entire API with it. You just need to download [Postman](https://www
-.getpostman.com/apps) and import the collection.
+Furthermore, it's highly recommended to take a look at the Postman collection. It's possible to test the entire API with it. You just need to download [Postman](https://www.getpostman.com/apps) and import this [collection](https://github.com/chiaradia/stockservice/postman/stockservice.postman_collection.json).
 
 ## Improvements
 
