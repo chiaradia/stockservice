@@ -23,7 +23,7 @@
         <!-- Sonar -->
         <sonar.coverage.exclusions>
             **/config/**/*,
-            **/exceptions/**/*,
+            **/exception/**/*,
             **/datatransferobject/**/*,
             **/domainobject/**/*,
             **/*Application.*,
