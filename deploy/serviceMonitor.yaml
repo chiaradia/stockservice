@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: stockservice
+  labels:
+    app: stockservice
+    release: my-release
+spec:
+  selector:
+    matchLabels:
+      app: stockservice
+  namespaceSelector:
+    any: true
+  endpoints:
+    - port: web
+      path: /actuator/prometheus
+      interval: 10s

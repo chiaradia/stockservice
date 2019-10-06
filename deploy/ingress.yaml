@@ -1,0 +1,12 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: stockservice-ingress
+spec:
+  rules:
+    - host: api.stockservice.tk
+      http:
+        paths:
+          - backend:
+              serviceName: stockservice
+              servicePort: 8080
