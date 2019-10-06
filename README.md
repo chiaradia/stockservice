@@ -55,7 +55,7 @@ Note that is possible to create custom ones, since Micrometer dependency has bee
     $ cd stockservice
     $ ./mvnw test
 
-Furthermore, it's highly recommended to take a look at the Postman collection. It's possible to test the entire API with it. You just need to download [Postman](https://www.getpostman.com/apps) and import this [collection](https://github.com/chiaradia/stockservice/postman/stockservice.postman_collection.json).
+Furthermore, it's highly recommended to take a look at the Postman collection. It's possible to test the entire API with it. You just need to download [Postman](https://www.getpostman.com/apps) and import this [collection](https://github.com/chiaradia/stockservice/blob/master/postman/stockservice.postman_collection.json).
 
 ## Improvements
 
