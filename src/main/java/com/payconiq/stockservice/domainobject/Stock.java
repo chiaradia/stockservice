@@ -1,6 +1,5 @@
 package com.payconiq.stockservice.domainobject;
 
-import com.payconiq.stockservice.domainvalue.StockStatus;
 import java.io.Serializable;
 import java.time.OffsetDateTime;
 import lombok.Builder;
@@ -14,7 +13,6 @@ public class Stock implements Serializable
     String name;
     Price currentPrice;
     Price lastPrice;
-    OffsetDateTime lastUpdated;
+    OffsetDateTime dateLastUpdated;
     OffsetDateTime dateCreated;
-    StockStatus stockStatus;
 }
