@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: stockservice
+  labels:
+    app: stockservice
+spec:
+  selector:
+    app: stockservice
+  ports:
+    - name: web
+      port: 8080
