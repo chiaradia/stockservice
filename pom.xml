@@ -19,6 +19,16 @@
         <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
         <wiremock.version>2.25.0</wiremock.version>
         <jacoco.version>0.8.4</jacoco.version>
+
+        <!-- Sonar -->
+        <sonar.coverage.exclusions>
+            **/config/**/*,
+            **/exceptions/**/*,
+            **/datatransferobject/**/*,
+            **/domainobject/**/*,
+            **/*Application.*,
+            **/*Test.*,
+        </sonar.coverage.exclusions>
     </properties>
 
     <dependencies>
