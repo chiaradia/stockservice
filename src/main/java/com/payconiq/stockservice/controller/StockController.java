@@ -4,6 +4,7 @@ import com.payconiq.stockservice.datatransferobject.PriceDTO;
 import com.payconiq.stockservice.datatransferobject.StockDTO;
 import com.payconiq.stockservice.service.StockService;
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -46,7 +47,7 @@ public class StockController
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public StockDTO createStock(@RequestBody StockDTO stockDTO)
+    public StockDTO createStock(@RequestBody @Valid StockDTO stockDTO)
     {
         return stockService.createStock(stockDTO);
     }
@@ -58,7 +59,7 @@ public class StockController
     }
 
     @PutMapping("/{stockId}")
-    public StockDTO updatePrice(@RequestBody PriceDTO priceDTO, @PathVariable("stockId") Long stockId)
+    public StockDTO updatePrice(@RequestBody @Valid PriceDTO priceDTO, @PathVariable("stockId") Long stockId)
     {
         return stockService.updatePrice(stockId, priceDTO);
     }

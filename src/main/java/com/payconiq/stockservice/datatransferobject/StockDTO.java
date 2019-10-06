@@ -1,8 +1,8 @@
 package com.payconiq.stockservice.datatransferobject;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.payconiq.stockservice.domainobject.Price;
 import java.time.OffsetDateTime;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +16,9 @@ import lombok.NoArgsConstructor;
 public class StockDTO
 {
     private Long id;
+    @NotNull
     private String name;
+    @NotNull
     private PriceDTO currentPrice;
     private OffsetDateTime dateLastUpdated;
     private OffsetDateTime dateCreated;
