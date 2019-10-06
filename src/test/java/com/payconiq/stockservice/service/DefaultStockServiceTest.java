@@ -13,12 +13,12 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import static com.payconiq.stockservice.DataGenerator.DUMMY_STOCK_DTO_WITH_ID;
-import static com.payconiq.stockservice.DataGenerator.DUMMY_STOCK_DTO_WITH_UPDATED_PRICE;
-import static com.payconiq.stockservice.DataGenerator.DUMMY_STOCK_WITH_ID;
-import static com.payconiq.stockservice.DataGenerator.DUMMY_STOCK_WITH_UPDATED_PRICE;
-import static com.payconiq.stockservice.DataGenerator.PRICE_UPDATE_DTO;
-import static com.payconiq.stockservice.DataGenerator.STOCK_CREATE_DTO;
+import static com.payconiq.stockservice.util.DataGenerator.DUMMY_STOCK_DTO_WITH_ID;
+import static com.payconiq.stockservice.util.DataGenerator.DUMMY_STOCK_DTO_WITH_UPDATED_PRICE;
+import static com.payconiq.stockservice.util.DataGenerator.DUMMY_STOCK_WITH_ID;
+import static com.payconiq.stockservice.util.DataGenerator.DUMMY_STOCK_WITH_UPDATED_PRICE;
+import static com.payconiq.stockservice.util.DataGenerator.PRICE_UPDATE_DTO;
+import static com.payconiq.stockservice.util.DataGenerator.STOCK_CREATE_DTO;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
