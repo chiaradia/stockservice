@@ -2,6 +2,7 @@ package com.payconiq.stockservice.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.payconiq.stockservice.datatransferobject.StockDTO;
+import com.payconiq.stockservice.exception.StockNotFoundException;
 import com.payconiq.stockservice.service.StockService;
 import javax.servlet.ServletContext;
 import org.junit.Assert;
@@ -112,6 +113,23 @@ public class StockControllerTest
             .andExpect(jsonPath("$.currentPrice").exists())
             .andExpect(jsonPath("$.name").exists())
             .andExpect(jsonPath("$.dateCreated").exists());
+
+    }
+
+    @Test
+    public void givenANotRegisteredStockId_whenGetRequested_thenNotFound() throws Exception
+    {
+
+        given(stockService.getStockById(DUMMY_STOCK_DTO_WITH_ID.getId()))
+            .willThrow(new StockNotFoundException("Message"));
+
+        this.mockMvc.perform(get(ENDPOINT + DUMMY_STOCK_DTO_WITH_ID.getId())
+            .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+            .accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andDo(print()).andExpect(status().isNotFound())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.message").exists())
+            .andExpect(jsonPath("$.timeStamp").exists());
 
     }
 

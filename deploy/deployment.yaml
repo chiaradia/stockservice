@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: stockservice
-          image: chiaradia/stockservice:0.0.1
+          image: chiaradia/stockservice:latest
           resources:
             limits:
               memory: "512M"

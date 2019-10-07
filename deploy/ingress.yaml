@@ -2,11 +2,17 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: stockservice-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  backend:
+    serviceName: default-http-backend
+    servicePort: 80
   rules:
-    - host: api.stockservice.tk
+    - host: minikube.local
       http:
         paths:
-          - backend:
+          - path: /
+            backend:
               serviceName: stockservice
               servicePort: 8080
