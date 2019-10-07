@@ -2,12 +2,15 @@ package com.payconiq.stockservice.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.payconiq.stockservice.datatransferobject.PriceDTO;
+import com.payconiq.stockservice.datatransferobject.StockDTO;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -30,6 +33,8 @@ import static org.springframework.http.HttpStatus.OK;
 public class StockControllerIT
 {
     private static final String ENDPOINT = "/api/stocks/";
+    private static final long STOCK_ID = 1L;
+    private static final long WRONG_STOCK_ID = 5L;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -48,25 +53,28 @@ public class StockControllerIT
     @Test
     public void givenANotRegisteredStockId_whenGetRequested_thenNotFound()
     {
-        Long stockId = 5L;
-
         given()
             .when()
-            .get(ENDPOINT + stockId)
+            .get(ENDPOINT + WRONG_STOCK_ID)
             .then()
             .log().ifValidationFails()
             .statusCode(NOT_FOUND.value());
     }
 
 
+    /*
+     * Added the annotation to clear the cached application context, since this test is being executed after the one that tests the deletion.
+     *
+     * I'm aware that for this situation I could either change the ID or add the annotation. =)
+     *
+     * */
     @Test
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     public void givenARegisteredStockId_whenGetRequested_thenOk()
     {
-        Long stockId = 1L;
-
         given()
             .when()
-            .get(ENDPOINT + stockId)
+            .get(ENDPOINT + STOCK_ID)
             .then()
             .log().ifValidationFails()
             .statusCode(OK.value());
@@ -91,12 +99,9 @@ public class StockControllerIT
     public void givenACorrectRequest_whenPosted_thenCreated() throws JsonProcessingException
     {
 
-        String stockJsonRequest = objectMapper.writerWithDefaultPrettyPrinter()
-            .writeValueAsString(DUMMY_STOCK_DTO_WITHOUT_ID);
-
         given()
             .contentType(JSON)
-            .body(stockJsonRequest)
+            .body(createStockDtoJsonRequest(DUMMY_STOCK_DTO_WITHOUT_ID))
             .post(ENDPOINT)
             .then()
             .log().ifValidationFails()
@@ -108,15 +113,10 @@ public class StockControllerIT
     public void givenAStockIdAndAPriceDTO_whenPriceUpdatedRequested_thenOk() throws JsonProcessingException
     {
 
-        Long stockId = 1L;
-
-        String stockJsonRequest = objectMapper.writerWithDefaultPrettyPrinter()
-            .writeValueAsString(PRICE_UPDATE_DTO);
-
         given()
             .contentType(JSON)
-            .body(stockJsonRequest)
-            .put(ENDPOINT + stockId)
+            .body(createPriceDtoJsonRequest(PRICE_UPDATE_DTO))
+            .put(ENDPOINT + STOCK_ID)
             .then()
             .log().ifValidationFails()
             .statusCode(OK.value());
@@ -152,5 +152,19 @@ public class StockControllerIT
             .statusCode(OK.value())
             .contentType(JSON)
             .body(not(equalTo("[]")));
+    }
+
+
+    private String createStockDtoJsonRequest(StockDTO stockDTO) throws JsonProcessingException
+    {
+        return objectMapper.writerWithDefaultPrettyPrinter()
+            .writeValueAsString(stockDTO);
+    }
+
+
+    private String createPriceDtoJsonRequest(PriceDTO priceDTO) throws JsonProcessingException
+    {
+        return objectMapper.writerWithDefaultPrettyPrinter()
+            .writeValueAsString(priceDTO);
     }
 }
