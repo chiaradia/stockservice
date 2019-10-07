@@ -55,7 +55,7 @@ public class StockController
     @DeleteMapping("/{stockId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteStock(@PathVariable("stockId") Long stockId) {
-
+        stockService.deleteStock(stockId);
     }
 
     @PutMapping("/{stockId}")

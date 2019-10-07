@@ -22,15 +22,26 @@ This application aims to expose a RESTful API to perform CRUD operations for sto
 ### As a regular Spring Boot application 
     $ git clone https://github.com/chiaradia/stockservice.git
     $ cd stockservice
-    $ ./mvnw -f stockservice/pom.xml spring-boot:run
+    $ ./mvnw -f pom.xml spring-boot:run
     $ curl http://localhost:8080/api/stocks
 
 ### With docker-compose (cloning the repository)  
     
     $ git clone https://github.com/chiaradia/stockservice.git
     $ cd stockservice
-    $ docker-compose up
+    $ ./mvnw install dockerfile:build && docker-compose up
     $ curl http://localhost:8080/api/stocks
+    
+Afterward the generated image is going to be stored in your local Docker repository as chiaradia/stockservice.
+
+### Kubernetes with Minikube  
+    
+    $ git clone https://github.com/chiaradia/stockservice.git
+    $ cd stockservice
+    $ ./mvnw install dockerfile:build && kubectl apply -f deploy/deployment.yaml
+    $ curl http://localhost:8080/api/stocks
+    
+As a requirement, you need to have Minikube installed on your computer. Please follow [this tutorial](https://kubernetes.io/docs/tasks/tools/install-minikube/) to do so.   
     
 ## Endpoints
 | Name 	| Path 	| Method 	| Content-Type 	| Description 	|
@@ -43,11 +54,11 @@ This application aims to expose a RESTful API to perform CRUD operations for sto
 
 ### Swagger 
 
-The Swagger documentation is available on http://localhost:8080/swagger-ui.html#/stock-controller
+The Swagger documentation is available on this [endpoint](http://localhost:8080/swagger-ui.html#/stock-controller) after starting the application locally. 
 
 ### Actuator (metrics) 
 
-This project is shipped with Actuator enable. The default metrics (Prometheus) are exposed on the default endpoint http://localhost:8080/actuator/prometheus.
+This project is shipped with Actuator enable. The default metrics (Prometheus) are exposed on the default [endpoint](http://localhost:8080/actuator/prometheus).
 
 Note that is possible to create custom ones, since Micrometer dependency has been added to the POM file.
 
@@ -60,4 +71,5 @@ Furthermore, it's highly recommended to take a look at the Postman collection. I
 ## Improvements
 
  - Write Integration Tests
- - Add Kubernetes support for Continuous Deployment with Travis CI
+ - Secure the service
+ - Add support for Continuous Deployment with Travis to Kubernetes
