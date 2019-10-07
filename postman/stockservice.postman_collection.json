@@ -74,7 +74,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/stocks",
+					"raw": "http://localhost:8080/api/stocks/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -82,7 +82,8 @@
 					"port": "8080",
 					"path": [
 						"api",
-						"stocks"
+						"stocks",
+						""
 					]
 				}
 			},
