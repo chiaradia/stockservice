@@ -34,14 +34,35 @@ This application aims to expose a RESTful API to perform CRUD operations for sto
     
 Afterward the generated image is going to be stored in your local Docker repository as chiaradia/stockservice.
 
-### Kubernetes with Minikube  
-    
-    $ git clone https://github.com/chiaradia/stockservice.git
-    $ cd stockservice
-    $ ./mvnw install dockerfile:build && kubectl apply -f deploy/deployment.yaml
-    $ curl http://localhost:8080/api/stocks
-    
+### Kubernetes with Minikube
+
 As a requirement, you need to have Minikube installed on your computer. Please follow [this tutorial](https://kubernetes.io/docs/tasks/tools/install-minikube/) to do so.   
+   
+    $ git clone https://github.com/chiaradia/stockservice.git
+    $ cd stockservice/deploy
+    $ kubectl create -f deployment.yaml
+    $ kubectl create -f service.yaml
+
+After creating the deployment of the service, and expose it through the service, you need to check what is the NodeIP, which is used to call resources from outside the cluster. 
+To do that, just run: 
+
+    $ kubectl cluster-info
+
+The output should be something like this:
+    
+    $ Kubernetes master is running at https://192.168.99.100:8443
+    
+Afterward, you need to check which port of the service is exposed:
+    
+    $ kubectl get service | grep stock
+
+The output should be something like this:
+    
+    $ stockservice   NodePort    10.104.225.182   <none>        8080:31956/TCP   108m
+
+With this you can cURL the service:
+    
+        $ curl http://192.168.99.100:31956/api/stocks          
     
 ## Endpoints
 | Name 	| Path 	| Method 	| Content-Type 	| Description 	|
