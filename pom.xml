@@ -17,8 +17,11 @@
     <properties>
         <java.version>1.8</java.version>
         <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
-        <wiremock.version>2.25.0</wiremock.version>
         <jacoco.version>0.8.4</jacoco.version>
+        <dockerfile-maven-plugin.version>1.4.9</dockerfile-maven-plugin.version>
+        <spring-mock-mvc.version>3.3.0</spring-mock-mvc.version>
+
+        <!-- Docker image -->
         <docker.image.prefix>chiaradia</docker.image.prefix>
 
         <!-- Sonar -->
@@ -74,9 +77,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.tomakehurst</groupId>
-            <artifactId>wiremock</artifactId>
-            <version>${wiremock.version}</version>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>spring-mock-mvc</artifactId>
+            <version>${spring-mock-mvc.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -148,7 +151,7 @@
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>dockerfile-maven-plugin</artifactId>
-                <version>1.4.9</version>
+                <version>${dockerfile-maven-plugin.version}</version>
                 <configuration>
                     <repository>${docker.image.prefix}/${project.artifactId}</repository>
                 </configuration>
